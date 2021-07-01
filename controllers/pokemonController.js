@@ -6,12 +6,15 @@ const pokemonService = require('../services/pokemonService');
 module.exports = {
     index: async (req, res) => {
         const data = await pokemonService.find(req.params);
-        res.status(200).send({ data });
+        res.status(200).send({ ...data });
     },
 
     show: async (req, res) => {
         const data = await pokemonService.findOne(req.params);
-        res.status(200).send({ data });
+        if (data) {
+            res.status(200).send({ data });
+        }
+        res.status(404).send({ message: 'pokemon not found' });
     },
 
     store: async (req, res) => {
