@@ -65,10 +65,13 @@ router.put('/pokemons/:id', isAdminMiddleware, pokemonCtr.update);
 router.delete('/pokemons/:id', isAdminMiddleware, pokemonCtr.delete);
 
 /* users routes. */
+router.get('/users/:id/pokemons', isAdminMiddleware, userCtr.pokemons);
 router.get('/users', isAdminMiddleware, userCtr.index);
 router.post('/users', isAdminMiddleware, userCtr.store);
+router.get('/users/pokemons', userCtr.pokemons);
 router.get('/users/:id', isAdminMiddleware, userCtr.show);
 router.put('/users/:id', isAdminMiddleware, userCtr.update);
 router.delete('/users/:id', isAdminMiddleware, userCtr.delete);
+router.post('/users/pokemons/toggle-like', userCtr.togglePokemon);
 
 module.exports = router;
