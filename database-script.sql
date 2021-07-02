@@ -52,4 +52,4 @@ create table user_pokemons
 alter table user_pokemons
     add primary key (id);
 
-INSERT INTO poke_api.users (name, last_name, email, is_admin, password) VALUES ('Luis', 'Figueroa', 'luis@gmail2.com', 1, '$2a$10$TJMjZDj73u0SPpmYhI/BXeylthLnsL18VJBO4vhgdCRreqEnqai2K')
+INSERT INTO poke_api.users (name, last_name, email, is_admin, password) VALUES ('Luis', 'Figueroa', 'luis@gmail.com', 1, '$2a$10$TJMjZDj73u0SPpmYhI/BXeylthLnsL18VJBO4vhgdCRreqEnqai2K')
