@@ -34,6 +34,12 @@ module.exports = {
     create: async (body) => {
         try {
             const { name, last_name, email, is_admin, password } = body;
+            const user = await findUserByEmail(email);
+
+            if (user.length > 0) {
+                return { message: 'The email already taken' }
+            }
+
             const encryptPassword = await setEncryptPassword(password);
             await query(
                 'INSERT INTO users (name, last_name, email, is_admin, password) VALUES (?,?,?,?,?)',
@@ -49,6 +55,12 @@ module.exports = {
         try {
             const { id } = params;
             const { name, last_name, email, is_admin, password } = body;
+            const user = await findUserByEmail(email);
+
+            if (user.length > 0) {
+                return { message: 'The email already taken' }
+            }
+
             const encryptPassword = await setEncryptPassword(password);
             await query(
                 'UPDATE users SET name=?, last_name=?, email=?, is_admin=?, password=? WHERE id=?',
@@ -74,7 +86,7 @@ module.exports = {
 
     findByEmail: async (email) => {
         try {
-            const user = await query('SELECT id, name, last_name, email, is_admin, password FROM users WHERE email = ?', [email]);
+            const user = await findUserByEmail(email);
             if (user.length > 0) {
                 return user[0];
             }
@@ -170,4 +182,8 @@ async function userPokemons(userId) {
 
 async function getLastUser() {
     return query('SELECT id, name, last_name, email, is_admin FROM users ORDER BY id DESC LIMIT 1')
+}
+
+async function findUserByEmail(email) {
+    return await query('SELECT id, name, last_name, email, is_admin, password FROM users WHERE email = ?', [email]);
 }
