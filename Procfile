@@ -1,1 +1,2 @@
-worker: node bin/www
+web:npm start
+worker:node bin/www
