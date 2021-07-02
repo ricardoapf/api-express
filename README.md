@@ -8,18 +8,24 @@
 
 ## Requirements
 
-For development, you will only need Node.js, MySQL and a node global package, yarn or npm, installed in your environement.
+For development, you will only need Node.js, MySQL and a node global package, yarn or npm, installed in your
+environement.
 
 ## Install dependencies
 
     $ yarn install
 
-or 
+or
 
     $ npm install
-
-
 
 ## Running the project
 
     $ yarn start
+
+## REST API Documentation
+
+- Go to swagger page:
+    - local server http://localhost:3000/api-doc
+    - heroku
+      server <a href="https://api-express-rapf.herokuapp.com/api-docs"> https://api-express-rapf.herokuapp.com/api-docs <a/>
