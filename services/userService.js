@@ -36,7 +36,7 @@ module.exports = {
             const { name, last_name, email, is_admin, password } = body;
             const user = await findUserByEmail(email);
 
-            if (user.length > 0) {
+            if (user.length) {
                 return { message: 'The email already taken' }
             }
 
@@ -57,7 +57,7 @@ module.exports = {
             const { name, last_name, email, is_admin, password } = body;
             const user = await findUserByEmail(email);
 
-            if (user.length > 0) {
+            if (user.length) {
                 return { message: 'The email already taken' }
             }
 
@@ -87,7 +87,7 @@ module.exports = {
     findByEmail: async (email) => {
         try {
             const user = await findUserByEmail(email);
-            if (user.length > 0) {
+            if (user.length) {
                 return user[0];
             }
             return null;

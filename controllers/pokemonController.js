@@ -11,8 +11,8 @@ module.exports = {
 
     show: async (req, res) => {
         const data = await pokemonService.findOne(req.params);
-        if (data) {
-            res.status(200).send({ data });
+        if (data.length) {
+            return res.status(200).send({ data });
         }
         return res.status(404).send({ message: 'pokemon not found' });
     },
