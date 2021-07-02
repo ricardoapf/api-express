@@ -5,7 +5,7 @@ const pokemonService = require('../services/pokemonService');
 
 module.exports = {
     index: async (req, res) => {
-        const data = await pokemonService.find(req.params);
+        const data = await pokemonService.find(req.query);
         return res.status(200).send({ ...data });
     },
 
