@@ -217,7 +217,33 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/User"
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "User's name",
+                      "example": "Luis"
+                    },
+                    "last_name": {
+                      "type": "string",
+                      "description": "User's lastname",
+                      "example": "Figueroa"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "User's email",
+                      "example": "luis@gmail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "User's password",
+                      "example": "secret"
+                    },
+                    "is_admin": {
+                      "type": "boolean",
+                      "description": "flag for admin",
+                      "example": false
+                    }
+                  }
                 }
               }
             }
@@ -225,9 +251,15 @@
           "responses": {
             "201": {
               "description": "successful operation",
-              "schema": {
-                "type": "object",
-                "$ref": "#/components/schemas/User"
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
               }
             },
             "401": {
@@ -316,7 +348,7 @@
             "200": {
               "description": "successful operation",
               "content": {
-                "application/josn": {
+                "application/json": {
                   "schema": {
                     "type": "object",
                     "$ref": "#/components/schemas/User"
@@ -353,9 +385,13 @@
           "responses": {
             "200": {
               "description": "successful operation",
-              "schema": {
-                "type": "object",
-                "$ref": "#/components/schemas/User"
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
               }
             },
             "401": {
@@ -374,13 +410,10 @@
           "produces": [
             "application/json"
           ],
-          "parameters": [
+          "parameters": [],
+          "security": [
             {
-              "name": "authorization",
-              "in": "header",
-              "required": true,
-              "type": "string",
-              "description": "an authorization header"
+              "jwt": []
             }
           ],
           "responses": {
@@ -414,24 +447,71 @@
           "consumes": [
             "application/json"
           ],
-          "parameters": [
+          "parameters": [],
+          "security": [
             {
-              "in": "body",
-              "name": "body",
-              "description": "Pokemon object",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "$ref": "#/components/schemas/Pokemon"
-              }
+              "jwt": []
             }
           ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Pokemons's name",
+                      "example": "Bulbasaur"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Pokemons's description",
+                      "example": "Este Pokémon nace con una semilla en el lomo, que brota con el paso del tiempo."
+                    },
+                    "image_url": {
+                      "type": "string",
+                      "description": "Pokemons's image",
+                      "example": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
+                    },
+                    "date": {
+                      "type": "date",
+                      "description": "Pokemons's date",
+                      "example": "2021-06-29"
+                    },
+                    "released": {
+                      "type": "boolean",
+                      "description": "released flag",
+                      "example": false
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Pokemons's type",
+                      "example": "Tierra"
+                    },
+                    "category": {
+                      "type": "string",
+                      "description": "Pokemons's category",
+                      "example": "Semilla"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "responses": {
-            "200": {
+            "201": {
               "description": "successful operation",
-              "schema": {
-                "type": "object",
-                "$ref": "#/components/schemas/User"
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Pokemon"
+                    }
+                  }
+                }
               }
             },
             "401": {
@@ -460,24 +540,31 @@
               "description": "Pokemon id that needs to be update",
               "required": true,
               "type": "int"
-            },
-            {
-              "in": "body",
-              "name": "body",
-              "description": "Pokemon object",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "$ref": "#/components/schemas/User"
-              }
             }
           ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Pokemon"
+                }
+              }
+            }
+          },
           "responses": {
             "200": {
               "description": "successful operation",
-              "schema": {
-                "type": "object",
-                "$ref": "#/components/schemas/User"
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "items": {
+                      "$ref": "#/components/schemas/Pokemon"
+                    }
+                  }
+                }
               }
             },
             "401": {
@@ -504,16 +591,6 @@
               "description": "Pokemon id that needs to be delete",
               "required": true,
               "type": "int"
-            },
-            {
-              "in": "body",
-              "name": "body",
-              "description": "Pokemon object",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "$ref": "#/components/schemas/Pokemon"
-              }
             }
           ],
           "responses": {
@@ -587,36 +664,42 @@
           "consumes": [
             "application/json"
           ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "Credentials",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "example": "luis@gmail.com"
-                  },
-                  "password": {
-                    "type": "string",
-                    "example": "secret"
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "description": "User's email",
+                      "example": "luis@gmail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "User's password",
+                      "example": "secret"
+                    }
                   }
                 }
               }
             }
-          ],
+          },
           "responses": {
             "200": {
               "description": "successful operation",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "token": {
-                    "type": "string",
-                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiQW50b25pMYHrWMprE"
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "token": {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiQW50b25pMYHrWMprE"
+                      }
+                    }
                   }
                 }
               }
@@ -670,24 +753,54 @@
           "consumes": [
             "application/json"
           ],
-          "parameters": [
+          "parameters": [],
+          "security": [
             {
-              "in": "body",
-              "name": "body",
-              "description": "User object",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "$ref": "#/components/schemas/User"
-              }
+              "jwt": []
             }
           ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "User's name",
+                      "example": "Luis"
+                    },
+                    "last_name": {
+                      "type": "string",
+                      "description": "User's lastname",
+                      "example": "Figueroa"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "User's email",
+                      "example": "luis@gmail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "User's password",
+                      "example": "secret"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "responses": {
             "200": {
               "description": "successful operation",
-              "schema": {
-                "type": "object",
-                "$ref": "#/components/schemas/User"
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
               }
             },
             "401": {
@@ -709,29 +822,44 @@
           "consumes": [
             "application/json"
           ],
-          "parameters": [
+          "parameters": [],
+          "security": [
             {
-              "in": "body",
-              "name": "body",
-              "description": "User object",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "pokemon_id": {
-                    "type": "int",
-                    "example": 1
+              "jwt": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pokemon_id": {
+                      "type": "string",
+                      "description": "Pokemons's id",
+                      "example": 1
+                    }
                   }
                 }
               }
             }
-          ],
+          },
           "responses": {
             "200": {
               "description": "successful operation",
-              "schema": {
-                "type": "object",
-                "$ref": "#/components/schemas/User"
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "messages": {
+                        "type": "string",
+                        "example": "action successful"
+                      }
+                    }
+                  }
+                }
               }
             },
             "401": {
