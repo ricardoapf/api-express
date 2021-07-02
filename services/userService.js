@@ -100,6 +100,11 @@ module.exports = {
     register: async (body) => {
         try {
             const { name, last_name, email, password } = body;
+            const user = await findUserByEmail(email);
+
+            if (user.length) {
+                return { message: 'The email already taken' }
+            }
             const encryptPassword = await setEncryptPassword(password);
             await query(
                 'INSERT INTO users (name, last_name, email, is_admin, password) VALUES (?,?,?,?,?)',
