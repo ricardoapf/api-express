@@ -1,0 +1,770 @@
+{
+  "apis": [
+    "./routes/*.js"
+  ],
+  "definition": {
+    "openapi": "3.0.0",
+    "info": {
+      "description": "This is a simple example Express API,",
+      "version": "1.0.0",
+      "title": "Pokemon API",
+      "contact": {
+        "email": "rp.antoniof@gmail.com"
+      }
+    },
+    "explorer": true,
+    "authAction": {
+      "JWT": {
+        "name": "JWT",
+        "schema": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "Authorization",
+          "description": ""
+        },
+        "value": "my own JWT token"
+      }
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000",
+        "description": "Local server"
+      },
+      {
+        "url": "https://api-express-rapf.herokuapp.com",
+        "description": "Heroku server"
+      }
+    ],
+    "schemes": [
+      "http",
+      "https"
+    ],
+    "tags": [
+      {
+        "name": "Login"
+      },
+      {
+        "name": "Profile"
+      },
+      {
+        "name": "Admin user operations"
+      },
+      {
+        "name": "Pokemon list"
+      },
+      {
+        "name": "Regular user operations"
+      }
+    ],
+    "components": {
+      "securitySchemes": {
+        "jwt": {
+          "type": "http",
+          "scheme": "bearer",
+          "in": "header",
+          "bearerFormat": "JWT",
+          "value": "JWT"
+        }
+      },
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "int",
+              "description": "User identification number",
+              "example": 1
+            },
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "example": "Luis"
+            },
+            "last_name": {
+              "type": "string",
+              "description": "User's lastname",
+              "example": "Figueroa"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "example": "luis@gmail.com"
+            },
+            "password": {
+              "type": "string",
+              "description": "User's password",
+              "example": "secret"
+            },
+            "is_admin": {
+              "type": "boolean",
+              "description": "flag for admin",
+              "example": false
+            }
+          }
+        },
+        "Pokemon": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "int",
+              "description": "Pokemon identification number",
+              "example": 1
+            },
+            "name": {
+              "type": "string",
+              "description": "Pokemons's name",
+              "example": "Bulbasaur"
+            },
+            "description": {
+              "type": "string",
+              "description": "Pokemons's description",
+              "example": "Este Pokémon nace con una semilla en el lomo, que brota con el paso del tiempo."
+            },
+            "image_url": {
+              "type": "string",
+              "description": "Pokemons's image",
+              "example": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
+            },
+            "date": {
+              "type": "date",
+              "description": "Pokemons's date",
+              "example": "2021-06-29"
+            },
+            "released": {
+              "type": "boolean",
+              "description": "released flag",
+              "example": false
+            },
+            "type": {
+              "type": "string",
+              "description": "Pokemons's type",
+              "example": "Tierra"
+            },
+            "category": {
+              "type": "string",
+              "description": "Pokemons's category",
+              "example": "Semilla"
+            }
+          }
+        }
+      },
+      "security": {
+        "bearerAuth": []
+      }
+    },
+    "security": [
+      {
+        "jwt": []
+      }
+    ],
+    "paths": {
+      "/users": {
+        "get": {
+          "tags": [
+            "Admin user operations"
+          ],
+          "summary": "Return a list of users",
+          "description": "Return a list of users for admin",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [],
+          "security": [
+            {
+              "jwt": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Admin user operations"
+          ],
+          "summary": "Save the user",
+          "description": "Save the user",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [],
+          "security": [
+            {
+              "jwt": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/users/{id}": {
+        "put": {
+          "tags": [
+            "Admin user operations"
+          ],
+          "summary": "Update the user",
+          "description": "Update the user",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "User id that needs to be show",
+              "required": true,
+              "type": "int"
+            }
+          ],
+          "security": [
+            {
+              "jwt": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/josn": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Admin user operations"
+          ],
+          "summary": "Delete the user",
+          "description": "Delete the user",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "User id that needs to be delete",
+              "required": true,
+              "type": "int"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/josn": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "Admin user operations"
+          ],
+          "summary": "Show the user",
+          "description": "Show the user",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "User id that needs to be show",
+              "required": true,
+              "type": "int"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/pokemons": {
+        "get": {
+          "tags": [
+            "Pokemon list"
+          ],
+          "summary": "Return a list of Pokemons for admin and regular user",
+          "description": "Return a list of Pokemons for admin and regular user",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "required": true,
+              "type": "string",
+              "description": "an authorization header"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Pokemon"
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Admin user operations"
+          ],
+          "summary": "Save the Pokemon",
+          "description": "Save the Pokemon",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Pokemon object",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/Pokemon"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/pokemons/{id}": {
+        "put": {
+          "tags": [
+            "Admin user operations"
+          ],
+          "summary": "Update the pokemon",
+          "description": "Update the pokemon",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Pokemon id that needs to be update",
+              "required": true,
+              "type": "int"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Pokemon object",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Admin user operations"
+          ],
+          "summary": "Delete the Pokemon",
+          "description": "Delete the Pokemon",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Pokemon id that needs to be delete",
+              "required": true,
+              "type": "int"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Pokemon object",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/Pokemon"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "Admin user operations"
+          ],
+          "summary": "Show the Pokemon",
+          "description": "Show the Pokemon",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Pokemon id that needs to be show",
+              "required": true,
+              "type": "int"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Pokemon object",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/login": {
+        "post": {
+          "tags": [
+            "Login"
+          ],
+          "summary": "Login",
+          "description": "Login",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Credentials",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "luis@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "secret"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiQW50b25pMYHrWMprE"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/profile": {
+        "get": {
+          "tags": [
+            "Profile"
+          ],
+          "summary": "Profile of the user authenticate admin or regular user",
+          "description": "Profile of the user authenticate admin or regular user",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [],
+          "security": [
+            {
+              "jwt": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/register": {
+        "post": {
+          "tags": [
+            "Regular user operations"
+          ],
+          "summary": "Save the regular user",
+          "description": "Save the regular user",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User object",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/users/pokemons/toggle-like": {
+        "post": {
+          "tags": [
+            "Regular user operations"
+          ],
+          "summary": "add or remove pokemon from favorites",
+          "description": "add or remove pokemon from favorites",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User object",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pokemon_id": {
+                    "type": "int",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/users/pokemons": {
+        "get": {
+          "tags": [
+            "Regular user operations"
+          ],
+          "summary": "Retrieve favorites pokemons",
+          "description": "Retrieve favorites pokemons",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "Array",
+                "$ref": "#/components/schemas/Pokemon"
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      }
+    }
+  }
+}

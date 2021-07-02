@@ -6,7 +6,7 @@ const pokemonService = require('../services/pokemonService');
 module.exports = {
     index: async (req, res) => {
         const data = await pokemonService.find(req.params);
-        res.status(200).send({ ...data });
+        return res.status(200).send({ ...data });
     },
 
     show: async (req, res) => {
@@ -14,22 +14,22 @@ module.exports = {
         if (data) {
             res.status(200).send({ data });
         }
-        res.status(404).send({ message: 'pokemon not found' });
+        return res.status(404).send({ message: 'pokemon not found' });
     },
 
     store: async (req, res) => {
         const data = await pokemonService.create(req.body);
-        res.status(201).send({ data });
+        return res.status(201).send({ data });
     },
 
     update: async (req, res) => {
         const data = await pokemonService.update(req.params, req.body);
-        res.status(200).send({ data });
+        return res.status(200).send({ data });
     },
 
     delete: async (req, res) => {
         const data = await pokemonService.destroy(req.params, req.body);
-        res.status(200).send({ data });
+        return res.status(200).send({ data });
     }
 };
 

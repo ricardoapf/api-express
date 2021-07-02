@@ -31,7 +31,7 @@ passport.use('login', new localStrategy({
 
 passport.use(new JWTStrategy({
         secretOrKey: env.SECRET_TOKEN,
-        jwtFromRequest: ExtractJWT.fromHeader('authorization')
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
     }, async (token, done) => {
         try {
             return done(null, token.user)
@@ -55,6 +55,6 @@ module.exports = {
 
     register: async (req, res, next) => {
         const data = await userService.register(req.body);
-        res.status(201).send({ data });
+        return res.status(201).send({ data });
     }
 };

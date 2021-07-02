@@ -48,9 +48,10 @@ module.exports = {
         try {
             const { id } = params;
             const { name, last_name, email, is_admin, password } = body;
+            const encryptPassword = await setEncryptPassword(password);
             await query(
                 'UPDATE users SET name=?, last_name=?, email=?, is_admin=?, password=? WHERE id=?',
-                [name, last_name, email, is_admin, password, +id]
+                [name, last_name, email, is_admin, encryptPassword, +id]
             );
 
             return await getUser(id);
