@@ -35,10 +35,11 @@ module.exports = {
         try {
             const { name, last_name, email, is_admin, password } = body;
             const encryptPassword = await setEncryptPassword(password);
-            return await query(
+            await query(
                 'INSERT INTO users (name, last_name, email, is_admin, password) VALUES (?,?,?,?,?)',
                 [name, last_name, email, is_admin, encryptPassword]
             );
+            return await getLastUser();
         } catch (e) {
             console.log(e)
         }
@@ -88,10 +89,11 @@ module.exports = {
         try {
             const { name, last_name, email, password } = body;
             const encryptPassword = await setEncryptPassword(password);
-            return await query(
+            await query(
                 'INSERT INTO users (name, last_name, email, is_admin, password) VALUES (?,?,?,?,?)',
                 [name, last_name, email, 0, encryptPassword]
             );
+            return await getLastUser();
         } catch (e) {
             console.log(e)
         }
@@ -164,4 +166,8 @@ async function userPokemons(userId) {
         return await query(`SELECT * FROM pokemons WHERE id IN ?`, [[userPokemonIds]]);
     }
     return userPokemonIds;
+}
+
+async function getLastUser() {
+    return query('SELECT id, name, last_name, email, is_admin FROM users ORDER BY id DESC LIMIT 1')
 }
