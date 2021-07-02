@@ -26,6 +26,6 @@ or
 ## REST API Documentation
 
 - Go to swagger page:
-    - local server http://localhost:3000/api-doc
+    - local server http://localhost:3000/api-docs
     - heroku
       server <a href="https://api-express-rapf.herokuapp.com/api-docs"> https://api-express-rapf.herokuapp.com/api-docs <a/>
