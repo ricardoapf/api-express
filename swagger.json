@@ -301,7 +301,33 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/User"
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "User's name",
+                      "example": "Luis"
+                    },
+                    "last_name": {
+                      "type": "string",
+                      "description": "User's lastname",
+                      "example": "Figueroa"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "User's email",
+                      "example": "luis@gmail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "User's password",
+                      "example": "secret"
+                    },
+                    "is_admin": {
+                      "type": "boolean",
+                      "description": "flag for admin",
+                      "example": false
+                    }
+                  }
                 }
               }
             }
