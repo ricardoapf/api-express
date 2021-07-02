@@ -168,7 +168,22 @@
           "produces": [
             "application/json"
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "page",
+              "in": "query",
+              "description": "page number",
+              "required": true,
+              "type": "int"
+            },
+            {
+              "name": "per_page",
+              "in": "query",
+              "description": "total items per page",
+              "required": true,
+              "type": "int"
+            }
+          ],
           "security": [
             {
               "jwt": []
@@ -436,7 +451,22 @@
           "produces": [
             "application/json"
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "page",
+              "in": "query",
+              "description": "page number",
+              "required": true,
+              "type": "int"
+            },
+            {
+              "name": "per_page",
+              "in": "query",
+              "description": "total items per page",
+              "required": true,
+              "type": "int"
+            }
+          ],
           "security": [
             {
               "jwt": []
@@ -574,7 +604,43 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/Pokemon"
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Pokemons's name",
+                      "example": "Bulbasaur"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Pokemons's description",
+                      "example": "Este Pokémon nace con una semilla en el lomo, que brota con el paso del tiempo."
+                    },
+                    "image_url": {
+                      "type": "string",
+                      "description": "Pokemons's image",
+                      "example": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
+                    },
+                    "date": {
+                      "type": "date",
+                      "description": "Pokemons's date",
+                      "example": "2021-06-29"
+                    },
+                    "released": {
+                      "type": "boolean",
+                      "description": "released flag",
+                      "example": false
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Pokemons's type",
+                      "example": "Tierra"
+                    },
+                    "category": {
+                      "type": "string",
+                      "description": "Pokemons's category",
+                      "example": "Semilla"
+                    }
+                  }
                 }
               }
             }
