@@ -13,13 +13,12 @@ environement.
 
 ## Install dependencies
 
-    $ yarn install
-
-or
-
     $ npm install
 
 ## Running the project
+
+    $ npm start
+or 
 
     $ yarn start
 
